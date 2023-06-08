@@ -1,0 +1,28 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends "base/info_base.html" %}
+
+{% block page_content %}
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{url_for('static', filename = 'js/collection.js')}}"></script>
+<div class="container-fluid">
+        <h3>标记的站点</h3>
+        {% for collection in data.collections %}
+            {% if (loop.index-1) % 2 ==0 %}
+                <div class="row">
+            {% endif %}
+                    <div class="col-md-3">
+                        <h4>
+                            <a href="{{url_for('main.view_station',username=data.username,station=collection.st_name,line=collection.line_name)}}">{{collection.line_name}}&nbsp;{{collection.st_name}}</a>
+                        </h4>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-default" id="untagging_{{collection.cid}}">取消标记</button>
+                    </div>
+            {% if (loop.index) % 2 == 0 or loop.last %}
+                </div>
+                <br>
+            {% endif %}
+        {% endfor %}
+</div>
+{% endblock %}

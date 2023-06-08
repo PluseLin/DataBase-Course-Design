@@ -1,0 +1,35 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends "base/info_base.html" %}
+
+{% block page_content %}
+<div class="container-fluid">
+    <div class="row">
+        <h4>用户：{{data.username}}</h6>
+    </div>
+    <br>
+    <div class="row">
+        <h4>修改用户名</h4>
+        <div class="login_area">
+            <form method="post">
+                {{ data['form'].csrf_token }}
+                {{ wtf.quick_form(data['form']) }}
+            </form>
+            <div class="login_message">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                    ×
+                                </button>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

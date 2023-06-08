@@ -1,0 +1,39 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}数据库课程设计{% endblock %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/info_base_style.css')}}">
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{url_for('main.index',username=data.username)}}">返回首页</a></li>
+                <li><a href="{{url_for('main.info',username=data.username)}}">个人信息</a></li>
+                <li><a href="{{url_for('main.editinfo',username=data.username)}}">修改密码</a></li>
+                <li><a href="{{url_for('main.collection',username=data.username)}}">查看标记的站点</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+    {% block page_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

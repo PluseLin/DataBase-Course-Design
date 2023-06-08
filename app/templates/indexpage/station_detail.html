@@ -1,0 +1,79 @@
+{% extends "base/index_base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{url_for('static', filename = 'js/station_detail.js')}}"></script>
+<div class="container">
+    <div class="row">
+            <h3>{{data.line_name}}&nbsp;{{data.station_name}}</h3>    
+            <button type="button" class="btn btn-default" id="tagging">标记为常用站点</button>
+            <button type="button" class="btn btn-default" id="untagging">取消标记</button>
+    </div>
+    <br>
+    <div class="row">
+            <h5>切换其他线路</h5>
+            {% for line in data.all_line %}
+                {% if (loop.index-1) %6==0 %}
+                    <div class="row">
+                {% endif %}
+                    <div class="col-md-2">
+                    <a href="{{url_for('main.view_station',username=data.username,station=data.station_name,line=line)}}"><h6>{{line}}</h6></a>
+                    </div>
+                {% if (loop.index)%6==0 or loop.last%}
+                    </div>
+                {% endif %}
+            {% endfor %}
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>车站示意图</h4>
+            <img src="{{data.pic_url}}" width=100%>
+        </div>
+        <div class="col-md-6">
+            <h4>首末班车时间</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>方向</th>
+                        <th>周日-周四</th>
+                        <th>周五、周六</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dire in data.directions %}
+                        <tr>
+                            <th>{{loop.index}}</th>
+                            <th>{{dire[0]}}</th>
+                            <th>{{dire[1]}}</th>
+                            <th>{{dire[2]}}</th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <h4>地铁出站口信息</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>出口编号</th>
+                        <th>出口名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for en in data.entrance %}
+                        <tr>
+                            <th>{{en[0]}}</th>
+                            <th>{{en[1]}}</th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

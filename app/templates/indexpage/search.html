@@ -1,0 +1,35 @@
+{% extends "base/index_base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<div class="container">
+    <div class="row">
+        <h2>查询站点</h2>
+        <form method="post">
+            {{ data['form'].csrf_token }}
+            {{ wtf.quick_form(data['form']) }}
+        </form>
+    </div>
+    <br>
+    {% if data.search == True %}
+        <div class="row">
+            <h4>查询结果</h4>
+        </div>
+        <div class="row">
+            <h4>共查询到{{data.stations|length}}条数据</h4>
+            {% for st in data.stations %}
+                {% if (loop.index-1) %2==0 %}
+                <div class="row">
+                {% endif %}
+                    <div class="col-md-6">
+                        <a href="{{url_for('main.view_station',username=data.username,station=st.st_name,line=st.line_name)}}"><h5>{{st.line_name}} {{st.st_name}}</h5></a>
+                    </div>
+                {% if (loop.index)%2==0 or loop.last%}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
